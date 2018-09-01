@@ -94,6 +94,7 @@ private.balanceSync = async function balanceSync(keypair) {
 	let localTransactions = mainTransactions.map((mt) => {
 		return modules.logic.transaction.create({
 			type: 1,// core.deposit
+			fee: '0',
 			args: [
 				mt.currency,
 				mt.currency === 'XAS' ? mt.amount : mt.amount2,

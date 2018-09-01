@@ -73,7 +73,7 @@ SandboxWrapper.prototype._parse = function (data) {
 			return this._onError(new Error("Asch can't find message for request from vm"));
 		}
 
-		message.dappid = this.id;
+		message.dappId = this.id;
 
 		this.apiHandler(message, function (err, response) {
 			var responseObj = {

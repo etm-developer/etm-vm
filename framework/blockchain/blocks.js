@@ -544,16 +544,23 @@ Blocks.prototype.loadBlocksOffset = function (limit, offset, cb) {
 }
 
 Blocks.prototype.findCommon = function (req, cb) {
-	let query = req.query
+	let query = req.query;
 		(async () => {
 			try {
+				//  update 2018-09-01
+				let condition = {}
+				if (query.ids){
+					condition.id = {
+						$in: query.ids
+					}
+				}
+				let min = query.min? query.min : 0
+				let max = query.max? query.max : 10
+				condition.height = {
+					$between: [min, max]
+				}
 				let blocks = await app.model.Block.findAll({
-					condition: {
-						id: {
-							$in: query.ids
-						},
-						height: { $between: [query.min, query.max] }
-					},
+					condition: condition,
 					sort: {
 						height: 1
 					},
