@@ -1,6 +1,6 @@
 var async = require("async");
 var crypto = require("crypto");
-var AschJS = require("asch-js");
+var etmJs = require("etm-js");
 var slots = require("../helpers/slots.js");
 var OutTransferManager = require("../helpers/outtransfer-manager.js");
 
@@ -147,11 +147,11 @@ private.withdrawalSync = async function withdrawalSync(secret) {
 	}).map((t) => {
 		let [currency, amount] = JSON.parse(t.args)
 		let address = modules.blockchain.accounts.generateAddressByPublicKey(t.senderPublicKey)
-		let ot = AschJS.transfer.createOutTransfer(address, app.meta.transactionId, t.id, currency, amount, secret)
+		let ot = etmJs.transfer.createOutTransfer(address, app.meta.transactionId, t.id, currency, amount, secret)
 		ot.signatures = []
 		for (let s of app.config.secrets) {
 			if (s !== secret) {
-				ot.signatures.push(AschJS.transfer.signOutTransfer(ot, s))
+				ot.signatures.push(etmJs.transfer.signOutTransfer(ot, s))
 			}
 			if (ot.signatures.length >= app.meta.unlockDelegates) break
 		}
@@ -268,7 +268,7 @@ Round.prototype.onMessage = function (query) {
 	} else if (query.topic == 'pendingOutTransfer') {
 		let ot = query.message
 		if (!private.outTransferManager.has(ot)) {
-			let signature = AschJS.transfer.signOutTransfer(out)
+			let signature = etmJs.transfer.signOutTransfer(out)
 			private.outTransferManager.addPending(ot)
 			private.outTransferManager.addSignature(ot.id, signature)
 			modules.api.transport.message('otSignature', {
