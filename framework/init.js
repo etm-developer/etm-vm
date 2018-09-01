@@ -165,7 +165,7 @@ module.exports = function (options, cb) {
 		// 	cb(null, protocolBuffers(schema));
 		// },
 
-		modules: ["sandbox", "logger", "bus", "sequence", "validator", function (cb, scope) {
+		modules: ["sandbox", "logger", "bus", "sequence", "validator", function (scope, cb) {
 			var lib = require("./modules.full.json");
 			var tasks = [];
 			Object.keys(lib).forEach(function (path) {
@@ -185,7 +185,7 @@ module.exports = function (options, cb) {
 			});
 		}],
 
-		ready: ["modules", "bus", "logger", function (cb, scope) {
+		ready: ["modules", "bus", "logger", function (scope, cb) {
 			ready = true;
 
 			(async function () {
