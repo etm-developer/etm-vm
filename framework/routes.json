@@ -15,6 +15,11 @@
 		"handler": "blockchain.accounts.getBalances"
 	},
 	{
+		"path": "/accounts/:address",
+		"method": "get",
+		"handler": "blockchain.accounts.getAccount"
+	},
+	{
 		"path": "/transactions/signed",
 		"method": "put",
 		"handler": "blockchain.transactions.addTransaction"
@@ -23,6 +28,11 @@
 		"path": "/transactions/unsigned",
 		"method": "put",
 		"handler": "blockchain.transactions.addTransactionUnsigned"
+	},
+	{
+		"path": "/transactions/unconfirmed",
+		"method": "get",
+		"handler": "blockchain.transactions.getUnconfirmedTransactions"
 	},
 	{
 		"path": "/transactions",
@@ -55,8 +65,8 @@
 		"handler": "blockchain.blocks.findCommon"
 	},
 	{
-		"path": "/blocks/count",
-		"method": "get",
-		"handler": "blockchain.blocks.count"
+		"path": "/blocks/votes",
+		"method": "post",
+		"handler": "blockchain.blocks.votes"
 	}
 ]
